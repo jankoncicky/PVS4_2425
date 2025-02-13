@@ -17,7 +17,7 @@ public class MultiEchoServer {
 
             while(true){
                 Socket client = serverSocket.accept();
-                System.out.println("Pripojil se novy klient: " + client.getInetAddress());
+                System.out.println("Připojil se novy klient: " + client.getInetAddress());
 
                 ClientHandler handler = new ClientHandler(client);
                 handler.start();
