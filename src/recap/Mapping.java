@@ -3,8 +3,9 @@ package recap;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Mapping {
     static class Movie{
@@ -54,12 +55,7 @@ public class Mapping {
 
         @Override
         public String toString() {
-            return "Movie{" +
-                    "name='" + name + '\'' +
-                    ", year=" + year +
-                    ", genre='" + genre + '\'' +
-                    ", rating=" + rating +
-                    '}';
+            return  name;
         }
     }
 
@@ -94,5 +90,25 @@ public class Mapping {
                 .sorted(Comparator.comparingInt(Movie::getYear).reversed())
                 .limit(10)
                 .forEach(System.out::println);
+
+        HashMap<String, List<Movie>> genreMap = new HashMap<>(); //celé na potítku
+        for(Movie movie : movies){
+            if (genreMap.containsKey(movie.getGenre())){
+                genreMap.get(movie.getGenre()).add(movie);
+            }else {
+                ArrayList<Movie> newGenre = new ArrayList<>();
+                newGenre.add(movie);
+                genreMap.put(movie.getGenre(), newGenre);
+            }
+        }
+        for (String genre : genreMap.keySet()){
+            System.out.println(genre);
+            for (Movie m : genreMap.get(genre)){
+                System.out.println("\t" + m.getName());
+            }
+        }
+
+        Map<String, List<Movie>> genreMapToo = movies.stream()//ekvivalent
+                .collect(Collectors.groupingBy(Movie::getGenre));
     }
 }
