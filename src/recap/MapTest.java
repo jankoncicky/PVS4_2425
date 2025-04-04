@@ -88,7 +88,7 @@ public class MapTest {
                 studentMap.put(student.getSubject(), newSubject );
             }
         }
-       students.stream().collect(Collectors.groupingBy(Student::getSubject, Collectors.averagingInt(Student::getTimeSpent) ))
+       students.stream().collect(Collectors.groupingBy(Student::getSubject, Collectors.averagingInt(Student::getTimeSpent) ));
        students.stream().collect(Collectors.groupingBy(Student::getSubject, Collectors.counting()) );
 
         double avgTime;
